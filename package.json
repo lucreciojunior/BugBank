@@ -1,0 +1,11 @@
+{
+  "name": "bugbank",
+  "version": "1.0.0",
+  "description": "Realizando testes em uma aplicação web bancaria",
+  "main": "index.js",
+  "author": "junior",
+  "license": "MIT",
+  "devDependencies": {
+    "cypress": "^12.9.0"
+  }
+}
