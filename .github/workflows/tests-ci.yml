@@ -10,9 +10,9 @@ jobs:
         uses: actions/checkout@v3.5.3
 
       - name: install dependencies
-        run: yarn install
+        run: npm install
 
       - name: Run e2e tests
-        run: yarn run
+        run: npx cypress run
 
       
