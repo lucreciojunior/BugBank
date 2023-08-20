@@ -11,7 +11,7 @@ jobs:
  cypress-electron-tests:
     runs-on: ubuntu-latest
     container: 
-      image: cypress/browser:node18.12.0-chrome103-ff107
+      image: cypress/browsers:node18.12.0-chrome106-ff106
       options: --user 1001
     steps: 
       - name: Get code
@@ -30,7 +30,7 @@ jobs:
     needs: cypress-electron-tests
     runs-on: ubuntu-latest
     container: 
-      image: cypress/browser:node18.12.0-chrome103-ff107
+      image: cypress/browsers:node18.12.0-chrome106-ff106
       options: --user 1001
     steps: 
       - name: Get code
@@ -49,7 +49,7 @@ jobs:
     needs: cypress-chrome-tests
     runs-on: ubuntu-latest
     container: 
-      image: cypress/browser:node18.12.0-chrome103-ff107
+      image: cypress/browsers:node18.12.0-chrome106-ff106
       options: --user 1001
     steps: 
       - name: Get code
