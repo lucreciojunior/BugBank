@@ -3,21 +3,67 @@ name: BugBank CI
 on:
   workflow_dispatch:
     inputs:
-      cli:
+      spec:
         description: Run by cypress command line
-        default: yarn cypress run
+        default: cypress/e2e/**
 
 jobs: 
-  cypress-electron-tests:
+ cypress-electron-tests:
     runs-on: ubuntu-latest
+    container: 
+      image: cypress/browser:node18.12.0-chrome103-ff107
+      options: --user 1001
     steps: 
       - name: Get code
         uses: actions/checkout@v3.5.3
 
-      - name: install dependencies
-        run: yarn install
+      - name: Cypress run
+        uses: cypress-io/github-action@v5.8.2
+        with:
+          install-commands: yarn install
+          browser: electron
+          record: true
+          group: UI electron
+          espec: ${{ github.events.inputs.spec }}
 
-      - name: Run e2e tests
-        run: ${{ github.event.inputs.cli }}
+ cypress-chrome-tests:
+    needs: cypress-electron-tests
+    runs-on: ubuntu-latest
+    container: 
+      image: cypress/browser:node18.12.0-chrome103-ff107
+      options: --user 1001
+    steps: 
+      - name: Get code
+        uses: actions/checkout@v3.5.3
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v5.8.2
+        with:
+          install-commands: yarn install
+          browser: chrome
+          record: true
+          group: UI chrome
+          espec: ${{ github.events.inputs.spec }}
+
+ cypress-firefox-tests:
+    needs: cypress-chrome-tests
+    runs-on: ubuntu-latest
+    container: 
+      image: cypress/browser:node18.12.0-chrome103-ff107
+      options: --user 1001
+    steps: 
+      - name: Get code
+        uses: actions/checkout@v3.5.3
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v5.8.2
+        with:
+          install-commands: yarn install
+          browser: firefox
+          record: true
+          group: UI firefox
+          espec: ${{ github.events.inputs.spec }}
+  
+
 
       
